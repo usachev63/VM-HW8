@@ -1,0 +1,2 @@
+add_executable(weenyStringTests WeenyStringTests.cpp)
+target_link_libraries(weenyStringTests weenystring GTest::gtest_main)
