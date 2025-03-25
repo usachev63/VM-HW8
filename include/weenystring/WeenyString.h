@@ -148,6 +148,10 @@ const char *WeenyString::cstr() const noexcept {
 bool WeenyString::isUniqueRef() const noexcept { return ~fixnum & 1; }
 
 void WeenyString::initFrom(const char *cstr) {
+  if (cstr == nullptr) {
+    setEmpty();
+    return;
+  }
   size_t len = strlen(cstr);
   char *allocated = reinterpret_cast<char *>(malloc(len + 1));
   if (allocated == nullptr)

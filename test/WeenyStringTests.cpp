@@ -194,6 +194,11 @@ TEST(WeenyString, EqualsToWeenyString) {
   EXPECT_TRUE(WeenyString("abc") == WeenyString("abc"));
 }
 
+TEST(WeenyString, CStrConstructor_Nullptr) {
+  WeenyString s((const char *)nullptr);
+  EXPECT_TRUE(s == "");
+}
+
 TEST(WeenyString, VectorGrow) {
   std::vector<WeenyString> array;
   array.emplace_back("abc");
