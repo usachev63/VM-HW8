@@ -11,31 +11,31 @@ namespace weenystring {
 
 class WeenyString {
 public:
-  inline WeenyString() noexcept;
-  inline ~WeenyString() noexcept;
-  inline explicit WeenyString(const char *cstr);
-  inline WeenyString(const WeenyString &other) noexcept;
-  inline WeenyString(WeenyString &&other) noexcept;
-  inline WeenyString &operator=(const char *cstr) noexcept;
-  inline WeenyString &operator=(const WeenyString &other) noexcept;
-  inline WeenyString &operator=(WeenyString &&other) noexcept;
-  inline void swap(WeenyString &other) noexcept;
+  WeenyString() noexcept;
+  ~WeenyString() noexcept;
+  explicit WeenyString(const char *cstr);
+  WeenyString(const WeenyString &other) noexcept;
+  WeenyString(WeenyString &&other) noexcept;
+  WeenyString &operator=(const char *cstr) noexcept;
+  WeenyString &operator=(const WeenyString &other) noexcept;
+  WeenyString &operator=(WeenyString &&other) noexcept;
+  void swap(WeenyString &other) noexcept;
 
-  inline bool operator==(const char *cstr) const noexcept;
-  inline bool operator==(const WeenyString &other) const noexcept;
-  inline bool operator!=(const char *cstr) const noexcept;
-  inline bool operator!=(const WeenyString &other) const noexcept;
-  inline bool operator<(const char *cstr) const noexcept;
-  inline bool operator<(const WeenyString &other) const noexcept;
-  inline bool operator<=(const char *cstr) const noexcept;
-  inline bool operator<=(const WeenyString &other) const noexcept;
-  inline bool operator>(const char *cstr) const noexcept;
-  inline bool operator>(const WeenyString &other) const noexcept;
-  inline bool operator>=(const char *cstr) const noexcept;
-  inline bool operator>=(const WeenyString &other) const noexcept;
+  bool operator==(const char *cstr) const noexcept;
+  bool operator==(const WeenyString &other) const noexcept;
+  bool operator!=(const char *cstr) const noexcept;
+  bool operator!=(const WeenyString &other) const noexcept;
+  bool operator<(const char *cstr) const noexcept;
+  bool operator<(const WeenyString &other) const noexcept;
+  bool operator<=(const char *cstr) const noexcept;
+  bool operator<=(const WeenyString &other) const noexcept;
+  bool operator>(const char *cstr) const noexcept;
+  bool operator>(const WeenyString &other) const noexcept;
+  bool operator>=(const char *cstr) const noexcept;
+  bool operator>=(const WeenyString &other) const noexcept;
 
-  inline const char *cstr() const noexcept;
-  inline bool isUniqueRef() const noexcept;
+  const char *cstr() const noexcept;
+  bool isUniqueRef() const noexcept;
 
   void dump() const;
 
@@ -45,11 +45,11 @@ public:
 #endif
 
 private:
-  inline void initFrom(const char *cstr);
-  inline void initFrom(const WeenyString &other);
-  inline void initFrom(WeenyString &&other);
-  inline void reset();
-  inline void setEmpty();
+  void initFrom(const char *cstr);
+  void initFrom(const WeenyString &other);
+  void initFrom(WeenyString &&other);
+  void reset();
+  void setEmpty();
 
 private:
   mutable uintptr_t fixnum;
@@ -64,25 +64,27 @@ static_assert(std::is_swappable_v<WeenyString>);
 
 // impl
 
-WeenyString::WeenyString() noexcept { setEmpty(); }
+inline WeenyString::WeenyString() noexcept { setEmpty(); }
 
-WeenyString::~WeenyString() noexcept { reset(); }
+inline WeenyString::~WeenyString() noexcept { reset(); }
 
-WeenyString::WeenyString(const char *cstr) { initFrom(cstr); }
+inline WeenyString::WeenyString(const char *cstr) { initFrom(cstr); }
 
-WeenyString::WeenyString(const WeenyString &other) noexcept { initFrom(other); }
+inline WeenyString::WeenyString(const WeenyString &other) noexcept {
+  initFrom(other);
+}
 
-WeenyString::WeenyString(WeenyString &&other) noexcept {
+inline WeenyString::WeenyString(WeenyString &&other) noexcept {
   initFrom(std::move(other));
 }
 
-WeenyString &WeenyString::operator=(const char *cstr) noexcept {
+inline WeenyString &WeenyString::operator=(const char *cstr) noexcept {
   reset();
   initFrom(cstr);
   return *this;
 }
 
-WeenyString &WeenyString::operator=(const WeenyString &other) noexcept {
+inline WeenyString &WeenyString::operator=(const WeenyString &other) noexcept {
   if (this == &other)
     return *this;
   reset();
@@ -90,7 +92,7 @@ WeenyString &WeenyString::operator=(const WeenyString &other) noexcept {
   return *this;
 }
 
-WeenyString &WeenyString::operator=(WeenyString &&other) noexcept {
+inline WeenyString &WeenyString::operator=(WeenyString &&other) noexcept {
   if (this == &other)
     return *this;
   reset();
@@ -98,56 +100,56 @@ WeenyString &WeenyString::operator=(WeenyString &&other) noexcept {
   return *this;
 }
 
-void WeenyString::swap(WeenyString &other) noexcept {
+inline void WeenyString::swap(WeenyString &other) noexcept {
   std::swap(fixnum, other.fixnum);
 }
 
-bool WeenyString::operator==(const char *cstr) const noexcept {
+inline bool WeenyString::operator==(const char *cstr) const noexcept {
   return strcmp(this->cstr(), cstr) == 0;
 }
-bool WeenyString::operator==(const WeenyString &other) const noexcept {
+inline bool WeenyString::operator==(const WeenyString &other) const noexcept {
   return strcmp(this->cstr(), other.cstr()) == 0;
 }
-bool WeenyString::operator!=(const char *cstr) const noexcept {
+inline bool WeenyString::operator!=(const char *cstr) const noexcept {
   return strcmp(this->cstr(), cstr) != 0;
 }
-bool WeenyString::operator!=(const WeenyString &other) const noexcept {
+inline bool WeenyString::operator!=(const WeenyString &other) const noexcept {
   return strcmp(this->cstr(), other.cstr()) != 0;
 }
-bool WeenyString::operator<(const char *cstr) const noexcept {
+inline bool WeenyString::operator<(const char *cstr) const noexcept {
   return strcmp(this->cstr(), cstr) < 0;
 }
-bool WeenyString::operator<(const WeenyString &other) const noexcept {
+inline bool WeenyString::operator<(const WeenyString &other) const noexcept {
   return strcmp(this->cstr(), other.cstr()) < 0;
 }
-bool WeenyString::operator<=(const char *cstr) const noexcept {
+inline bool WeenyString::operator<=(const char *cstr) const noexcept {
   return strcmp(this->cstr(), cstr) <= 0;
 }
-bool WeenyString::operator<=(const WeenyString &other) const noexcept {
+inline bool WeenyString::operator<=(const WeenyString &other) const noexcept {
   return strcmp(this->cstr(), other.cstr()) <= 0;
 }
-bool WeenyString::operator>(const char *cstr) const noexcept {
+inline bool WeenyString::operator>(const char *cstr) const noexcept {
   return strcmp(this->cstr(), cstr) > 0;
 }
-bool WeenyString::operator>(const WeenyString &other) const noexcept {
+inline bool WeenyString::operator>(const WeenyString &other) const noexcept {
   return strcmp(this->cstr(), other.cstr()) > 0;
 }
-bool WeenyString::operator>=(const char *cstr) const noexcept {
+inline bool WeenyString::operator>=(const char *cstr) const noexcept {
   return strcmp(this->cstr(), cstr) >= 0;
 }
-bool WeenyString::operator>=(const WeenyString &other) const noexcept {
+inline bool WeenyString::operator>=(const WeenyString &other) const noexcept {
   return strcmp(this->cstr(), other.cstr()) >= 0;
 }
 
 // internal
 
-const char *WeenyString::cstr() const noexcept {
+inline const char *WeenyString::cstr() const noexcept {
   return reinterpret_cast<const char *>(fixnum & ~1);
 }
 
-bool WeenyString::isUniqueRef() const noexcept { return ~fixnum & 1; }
+inline bool WeenyString::isUniqueRef() const noexcept { return ~fixnum & 1; }
 
-void WeenyString::initFrom(const char *cstr) {
+inline void WeenyString::initFrom(const char *cstr) {
   if (cstr == nullptr) {
     setEmpty();
     return;
@@ -167,7 +169,7 @@ void WeenyString::initFrom(const char *cstr) {
   fixnum = reinterpret_cast<uintptr_t>(allocated);
 }
 
-void WeenyString::initFrom(const WeenyString &other) {
+inline void WeenyString::initFrom(const WeenyString &other) {
 #ifdef WEENY_DEBUG_LOG
   std::cerr << "WeenyString initFrom copied " << other.cstr() << std::endl;
 #endif
@@ -176,7 +178,7 @@ void WeenyString::initFrom(const WeenyString &other) {
   this->fixnum = other.fixnum;
 }
 
-void WeenyString::initFrom(WeenyString &&other) {
+inline void WeenyString::initFrom(WeenyString &&other) {
 #ifdef WEENY_DEBUG_LOG
   std::cerr << "WeenyString initFrom moved " << other.cstr() << std::endl;
 #endif
@@ -184,7 +186,7 @@ void WeenyString::initFrom(WeenyString &&other) {
   other.setEmpty();
 }
 
-void WeenyString::reset() {
+inline void WeenyString::reset() {
   if (isUniqueRef()) {
 #ifdef WEENY_DEBUG_LOG
     std::cerr << "WeenyString free at addr " << (void *)cstr() << " string "
@@ -198,7 +200,7 @@ void WeenyString::reset() {
   setEmpty();
 }
 
-void WeenyString::setEmpty() {
+inline void WeenyString::setEmpty() {
   fixnum = reinterpret_cast<uintptr_t>(emptyString) | 1;
 }
 
