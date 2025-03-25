@@ -178,6 +178,22 @@ TEST(WeenyString, EqualsToCStr) {
   EXPECT_TRUE(s1 == "1234");
 }
 
+TEST(WeenyString, CompareToCStr_Nullptr) {
+  EXPECT_TRUE(WeenyString() == (const char *)nullptr);
+  EXPECT_TRUE(WeenyString("") == (const char *)nullptr);
+  EXPECT_FALSE(WeenyString("a") == (const char *)nullptr);
+  EXPECT_TRUE(WeenyString("a") != (const char *)nullptr);
+  EXPECT_FALSE(WeenyString() != (const char *)nullptr);
+  EXPECT_FALSE(WeenyString() < (const char *)nullptr);
+  EXPECT_FALSE(WeenyString("xyz") < (const char *)nullptr);
+  EXPECT_TRUE(WeenyString() <= (const char *)nullptr);
+  EXPECT_FALSE(WeenyString("a") <= (const char *)nullptr);
+  EXPECT_FALSE(WeenyString() > (const char *)nullptr);
+  EXPECT_TRUE(WeenyString("true") > (const char *)nullptr);
+  EXPECT_TRUE(WeenyString() >= (const char *)nullptr);
+  EXPECT_TRUE(WeenyString("xx") >= (const char *)nullptr);
+}
+
 TEST(WeenyString, EqualsToWeenyString) {
   WeenyString empty;
   EXPECT_TRUE(empty == empty);

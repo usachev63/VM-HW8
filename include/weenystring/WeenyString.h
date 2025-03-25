@@ -34,6 +34,7 @@ public:
   bool operator>=(const char *cstr) const noexcept;
   bool operator>=(const WeenyString &other) const noexcept;
 
+  /// \return non-null
   const char *cstr() const noexcept;
   bool isUniqueRef() const noexcept;
 
@@ -105,37 +106,37 @@ inline void WeenyString::swap(WeenyString &other) noexcept {
 }
 
 inline bool WeenyString::operator==(const char *cstr) const noexcept {
-  return strcmp(this->cstr(), cstr) == 0;
+  return strcmp(this->cstr(), cstr ? cstr : "") == 0;
 }
 inline bool WeenyString::operator==(const WeenyString &other) const noexcept {
   return strcmp(this->cstr(), other.cstr()) == 0;
 }
 inline bool WeenyString::operator!=(const char *cstr) const noexcept {
-  return strcmp(this->cstr(), cstr) != 0;
+  return strcmp(this->cstr(), cstr ? cstr : "") != 0;
 }
 inline bool WeenyString::operator!=(const WeenyString &other) const noexcept {
   return strcmp(this->cstr(), other.cstr()) != 0;
 }
 inline bool WeenyString::operator<(const char *cstr) const noexcept {
-  return strcmp(this->cstr(), cstr) < 0;
+  return strcmp(this->cstr(), cstr ? cstr : "") < 0;
 }
 inline bool WeenyString::operator<(const WeenyString &other) const noexcept {
   return strcmp(this->cstr(), other.cstr()) < 0;
 }
 inline bool WeenyString::operator<=(const char *cstr) const noexcept {
-  return strcmp(this->cstr(), cstr) <= 0;
+  return strcmp(this->cstr(), cstr ? cstr : "") <= 0;
 }
 inline bool WeenyString::operator<=(const WeenyString &other) const noexcept {
   return strcmp(this->cstr(), other.cstr()) <= 0;
 }
 inline bool WeenyString::operator>(const char *cstr) const noexcept {
-  return strcmp(this->cstr(), cstr) > 0;
+  return strcmp(this->cstr(), cstr ? cstr : "") > 0;
 }
 inline bool WeenyString::operator>(const WeenyString &other) const noexcept {
   return strcmp(this->cstr(), other.cstr()) > 0;
 }
 inline bool WeenyString::operator>=(const char *cstr) const noexcept {
-  return strcmp(this->cstr(), cstr) >= 0;
+  return strcmp(this->cstr(), cstr ? cstr : "") >= 0;
 }
 inline bool WeenyString::operator>=(const WeenyString &other) const noexcept {
   return strcmp(this->cstr(), other.cstr()) >= 0;
