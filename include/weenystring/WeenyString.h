@@ -52,6 +52,10 @@ private:
   void reset();
   void setEmpty();
 
+  /// \param cstr may be NULL
+  int cmp(const char *cstr) const noexcept;
+  int cmp(const WeenyString &other) const noexcept;
+
 private:
   mutable uintptr_t fixnum;
 
@@ -106,40 +110,40 @@ inline void WeenyString::swap(WeenyString &other) noexcept {
 }
 
 inline bool WeenyString::operator==(const char *cstr) const noexcept {
-  return strcmp(this->cstr(), cstr ? cstr : "") == 0;
+  return cmp(cstr) == 0;
 }
 inline bool WeenyString::operator==(const WeenyString &other) const noexcept {
-  return strcmp(this->cstr(), other.cstr()) == 0;
+  return cmp(other) == 0;
 }
 inline bool WeenyString::operator!=(const char *cstr) const noexcept {
-  return strcmp(this->cstr(), cstr ? cstr : "") != 0;
+  return cmp(cstr) != 0;
 }
 inline bool WeenyString::operator!=(const WeenyString &other) const noexcept {
-  return strcmp(this->cstr(), other.cstr()) != 0;
+  return cmp(other) != 0;
 }
 inline bool WeenyString::operator<(const char *cstr) const noexcept {
-  return strcmp(this->cstr(), cstr ? cstr : "") < 0;
+  return cmp(cstr) < 0;
 }
 inline bool WeenyString::operator<(const WeenyString &other) const noexcept {
-  return strcmp(this->cstr(), other.cstr()) < 0;
+  return cmp(other) < 0;
 }
 inline bool WeenyString::operator<=(const char *cstr) const noexcept {
-  return strcmp(this->cstr(), cstr ? cstr : "") <= 0;
+  return cmp(cstr) <= 0;
 }
 inline bool WeenyString::operator<=(const WeenyString &other) const noexcept {
-  return strcmp(this->cstr(), other.cstr()) <= 0;
+  return cmp(other) <= 0;
 }
 inline bool WeenyString::operator>(const char *cstr) const noexcept {
-  return strcmp(this->cstr(), cstr ? cstr : "") > 0;
+  return cmp(cstr) > 0;
 }
 inline bool WeenyString::operator>(const WeenyString &other) const noexcept {
-  return strcmp(this->cstr(), other.cstr()) > 0;
+  return cmp(other) > 0;
 }
 inline bool WeenyString::operator>=(const char *cstr) const noexcept {
-  return strcmp(this->cstr(), cstr ? cstr : "") >= 0;
+  return cmp(cstr) >= 0;
 }
 inline bool WeenyString::operator>=(const WeenyString &other) const noexcept {
-  return strcmp(this->cstr(), other.cstr()) >= 0;
+  return cmp(other) >= 0;
 }
 
 // internal
@@ -203,6 +207,14 @@ inline void WeenyString::reset() {
 
 inline void WeenyString::setEmpty() {
   fixnum = reinterpret_cast<uintptr_t>(emptyString) | 1;
+}
+
+inline int WeenyString::cmp(const char *cstr) const noexcept {
+  return strcmp(this->cstr(), cstr ? cstr : "");
+}
+
+inline int WeenyString::cmp(const WeenyString &other) const noexcept {
+  return strcmp(this->cstr(), other.cstr());
 }
 
 } // namespace weenystring
